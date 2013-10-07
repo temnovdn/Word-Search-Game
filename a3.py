@@ -56,7 +56,7 @@ def make_str_from_column(board, column_index):
     """
 
     column = ''
-
+    
     for i in range(len(board)):
         column = column + board[i][column_index]
 
@@ -76,11 +76,13 @@ def board_contains_word_in_row(board, word):
     True
     """
 
+    contains = False
+
     for row_index in range(len(board)):
         if word in make_str_from_row(board, row_index):
-            return True
+            contains = True
 
-    return False
+    return contains
 
 
 def board_contains_word_in_column(board, word):
@@ -96,11 +98,13 @@ def board_contains_word_in_column(board, word):
     False
     """
     
+    contains = False
+
     for i in range(len(board[0])):
         if make_str_from_column(board,i) == word:
-            return True
+            contains = True
 
-    return False
+    return contains
 
 
 def board_contains_word(board, word):
@@ -189,6 +193,16 @@ def read_words(words_file):
 
     >>read_words(words.txt)
     """
+
+    L = words_file.readlines()
+
+    for i in range(len(L)):
+        L[i] = L[i].rstrip('\n')
+
+    return L
+        
+
+    
     
     
     
@@ -198,4 +212,18 @@ def read_board(board_file):
     Return a board read from open file board_file. The board file will contain
     one row of the board per line. Newlines are not included in the board.
     """
+
+    board = []
+    row_element = board_file.read(1)
+
+    while row_element != '':
+        board_row = []
+        while row_element != '\n':
+            board_row.append(row_element)
+            row_element = board_file.read(1)
+        board.append(board_row)
+        row_element = board_file.read(1)
+
+    return board
+    
 
